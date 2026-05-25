@@ -1,0 +1,72 @@
+---
+---
+
+<button
+  class="audio-toggle"
+  data-audio-toggle
+  aria-pressed="false"
+  aria-label="Toggle ambient audio"
+  type="button"
+>
+  <span class="audio-toggle__led" aria-hidden="true"></span>
+  <span data-label>AUDIO OFF</span>
+</button>
+
+<style>
+  .audio-toggle {
+    /* Fixed bottom-center — sits in the dead zone between the hero
+       bottombar's left (decoder progress) and right (scroll hint).
+       Above the curtain (z 30) but below atmosphere (z 100). */
+    position: fixed;
+    bottom: var(--space-m);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 65;
+
+    pointer-events: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+
+    background: transparent;
+    color: var(--c-bone-2);
+    border: 1px solid currentColor;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    transition:
+      color var(--dur-fast) var(--ease-out-quart),
+      border-color var(--dur-fast) var(--ease-out-quart),
+      opacity var(--dur-base) var(--ease-out-quart);
+  }
+  .audio-toggle:hover  { color: var(--c-bone); }
+  .audio-toggle:focus-visible {
+    outline: 1px solid var(--c-amber);
+    outline-offset: 3px;
+  }
+
+  /* Fade slightly on the hero so the toggle doesn't fight the hero
+     bottombar's progress indicator. Mirrors how .sys--bl/--br hide there. */
+  body.room-hero .audio-toggle { opacity: 0.55; }
+
+  .audio-toggle__led {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--c-bone-3);
+    box-shadow: none;
+    transition:
+      background var(--dur-base) var(--ease-out-quart),
+      box-shadow  var(--dur-base) var(--ease-out-quart);
+  }
+
+  .audio-toggle.is-on { color: var(--c-toxic); }
+  .audio-toggle.is-on .audio-toggle__led {
+    background: var(--c-toxic);
+    box-shadow: 0 0 8px var(--c-toxic);
+    animation: led-pulse 2.2s ease-in-out infinite;
+  }
+</style>

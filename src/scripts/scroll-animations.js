@@ -176,6 +176,11 @@ function initPin() {
 function initCurtain() {
   const curtain = document.getElementById('curtain');
   if (!curtain) return;
+
+  // Swell fires ONCE when progress crosses 0.6 upward, and resets when
+  // it goes back under 0.6 — so scrubbing past-and-back-and-past replays.
+  let swellFired = false;
+
   gsap.to(curtain, {
     yPercent: -100,
     ease: 'expo.out',
@@ -185,8 +190,16 @@ function initCurtain() {
       end: 'bottom bottom',
       scrub: 0.5,
       onUpdate: (self) => {
-        if (self.progress > 0.6) curtain.classList.add('active');
-        else curtain.classList.remove('active');
+        if (self.progress > 0.6) {
+          curtain.classList.add('active');
+          if (!swellFired && window.__audio) {
+            window.__audio.swell();
+            swellFired = true;
+          }
+        } else {
+          curtain.classList.remove('active');
+          if (swellFired) swellFired = false;
+        }
       },
     },
   });

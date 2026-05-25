@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import AudioToggle from '../components/AudioToggle.astro';
 
 interface Props {
   title?: string;
@@ -77,6 +78,8 @@ const {
       <span class="sys__row"><span class="k">sig</span><span class="v v--toxic" id="sys-sig">●●●●●○</span></span>
     </div>
 
+    <AudioToggle />
+
     <slot />
 
     <script>
@@ -85,11 +88,14 @@ const {
       document.documentElement.classList.remove('no-js');
       document.documentElement.classList.add('js-ready');
 
-      // Order: reduced-motion gate → lenis bridge → animations + effects
+      // Order: reduced-motion gate → lenis bridge → animations + effects.
+      // audio.js loads last; effects.js + scroll-animations.js call
+      // window.__audio?.beep|pop|swell() so they no-op until audio is on.
       import '../scripts/reduced-motion.js';
       import '../scripts/lenis-init.js';
       import '../scripts/scroll-animations.js';
       import '../scripts/effects.js';
+      import '../scripts/audio.js';
     </script>
   </body>
 </html>

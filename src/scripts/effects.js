@@ -65,14 +65,22 @@ function initAtmosphere() {
   }
 
   // Active room + body class for room-aware CSS (e.g. hide bottom chrome
-  // while hero owns its own progress band)
+  // while hero owns its own progress band). On real room CHANGES (not the
+  // first observation), ping window.__audio.beep() if audio is enabled.
   const sections = document.querySelectorAll('section[data-room]');
   if (sections.length && rEl) {
+    let lastRoom = null;
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
           if (e.isIntersecting && e.target.dataset.room) {
-            rEl.textContent = e.target.dataset.room;
+            const newRoom = e.target.dataset.room;
+            // Beep only on a real change, not on first observation
+            if (lastRoom !== null && newRoom !== lastRoom && window.__audio) {
+              window.__audio.beep();
+            }
+            lastRoom = newRoom;
+            rEl.textContent = newRoom;
             document.body.className = document.body.className
               .split(' ')
               .filter((c) => !c.startsWith('room-'))
@@ -96,7 +104,8 @@ function initAtmosphere() {
     }, 3200);
   }
 
-  // Occasional amber flash — every 9-16s, ~170ms total
+  // Occasional amber flash — every 9-16s, ~170ms total. Sync a pop()
+  // so the visual glitch has its sonic counterpart.
   if (flashEl && !prefersReducedMotion) {
     function scheduleFlash() {
       const wait = 9000 + Math.random() * 7000;
@@ -108,6 +117,7 @@ function initAtmosphere() {
           onComplete: () =>
             gsap.to(flashEl, { opacity: 0, duration: 0.12, ease: 'none' }),
         });
+        if (window.__audio) window.__audio.pop();
         scheduleFlash();
       }, wait);
     }
