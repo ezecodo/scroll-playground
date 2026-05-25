@@ -1,0 +1,164 @@
+---
+// Six dossier cards. `mod` colors the file ID per status.
+// `title` may contain <em>...</em> markup — we set it via Fragment.
+const cards = [
+  { id: 'EXP/01', mod: 'grid-card--amber', title: 'El scroll como dispositivo de obediencia.',     bottom: ['1976—presente', 'Sala roja'],  watermark: '01' },
+  { id: 'EXP/02', mod: 'grid-card--blood', title: 'Color plano: el último <em>refugio</em>.',      bottom: ['Origen <span class="redact"><span>desconocido</span></span>', 'Sala fría'] },
+  { id: 'EXP/03', mod: '',                 title: 'Hard rectangle.',                                bottom: ['<span class="redact"><span>doce sujetos</span></span>', 'Sala 07'] },
+  { id: 'EXP/04', mod: 'grid-card--toxic', title: 'Negro absoluto.',                                bottom: ['—', '—'] },
+  { id: 'EXP/05', mod: 'grid-card--amber', title: 'Verde <em>tóxico</em>: una promesa.',            bottom: ['Estabilidad media', 'Sala 12'] },
+  { id: 'EXP/06', mod: 'grid-card--blood', title: 'Hueso. Lo único que no se quema.',               bottom: ['<span class="redact"><span>archivado</span></span>', 'Sala fría'] },
+];
+---
+
+<section id="grid" class="grid-wrap" data-section="grid" data-room="02 / 06">
+  <div class="grid-head">
+    <div>
+      <div class="eyebrow"><span class="ix">02</span>EXPEDIENTE — SEIS PRUEBAS</div>
+      <h2 class="reveal">Documentos extraídos de la <em>sala fría</em>. Verifique antes de continuar.</h2>
+    </div>
+    <div class="grid-head__meta">
+      <div><strong>06</strong> ítems</div>
+      <div>úl. revisión <strong class="mono">14:02:03</strong></div>
+      <div class="mono" style="color:var(--c-amber);">acceso parcial</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    {cards.map((card) => (
+      <article class={`grid-card ${card.mod}`}>
+        <div class="grid-card__top">
+          <span>Item</span>
+          <span class="grid-card__id">{card.id}</span>
+        </div>
+        {card.watermark && <div class="grid-card__watermark">{card.watermark}</div>}
+        <h3 class="grid-card__title" data-scramble set:html={card.title}></h3>
+        <div class="grid-card__bottom">
+          <span set:html={card.bottom[0]}></span>
+          <span set:html={card.bottom[1]}></span>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .grid-wrap {
+    background: var(--c-ink);
+    color: var(--c-bone);
+    padding: var(--space-3xl) var(--space-l);
+    border-top: 1px solid rgba(232, 226, 211, 0.08);
+  }
+  .grid-head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-m);
+    align-items: end;
+    max-width: 1400px;
+    margin: 0 auto var(--space-xl);
+  }
+  .grid-head h2 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--text-4xl);
+    line-height: 0.94;
+    letter-spacing: -0.03em;
+    max-width: 18ch;
+    margin-top: var(--space-s);
+  }
+  .grid-head h2 em { font-style: italic; color: var(--c-amber); }
+  .grid-head__meta {
+    text-align: right;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--c-bone-3);
+    line-height: 1.8;
+  }
+  .grid-head__meta strong { color: var(--c-bone); font-weight: 500; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: minmax(280px, auto);
+    gap: 1px;                              /* hairline gap = database-table feel */
+    max-width: 1400px;
+    margin: 0 auto;
+    background: rgba(232, 226, 211, 0.12);
+    border: 1px solid rgba(232, 226, 211, 0.12);
+  }
+  .grid-card {
+    position: relative;
+    padding: var(--space-m);
+    background: var(--c-ink);
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 320px;
+    transition: background var(--dur-base) var(--ease-out-quart);
+    will-change: transform;
+  }
+  .grid-card:hover { background: var(--c-ink-2); }
+
+  .grid-card__top,
+  .grid-card__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-s);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--c-bone-3);
+  }
+  .grid-card__bottom { align-items: flex-end; }
+  .grid-card__id { color: var(--c-amber); }
+
+  .grid-card__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(28px, 2.6vw + 12px, 44px);
+    line-height: 0.96;
+    letter-spacing: -0.025em;
+    color: var(--c-bone);
+    text-wrap: balance;
+  }
+  .grid-card__title em { font-style: italic; color: var(--c-amber); }
+
+  /* Asymmetric layout — 6-col grid w/ varying spans */
+  .grid-card:nth-child(1) { grid-column: span 3; grid-row: span 2; }
+  .grid-card:nth-child(2) { grid-column: span 3; }
+  .grid-card:nth-child(3) { grid-column: span 2; }
+  .grid-card:nth-child(4) { grid-column: span 1; }
+  .grid-card:nth-child(5) { grid-column: span 2; }
+  .grid-card:nth-child(6) { grid-column: span 4; }
+
+  .grid-card--amber .grid-card__id { color: var(--c-amber); }
+  .grid-card--blood .grid-card__id { color: var(--c-blood); }
+  .grid-card--toxic .grid-card__id { color: var(--c-toxic); }
+
+  .grid-card__watermark {
+    position: absolute;
+    top: 50%; right: -2vw;
+    transform: translateY(-50%);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(120px, 18vw, 280px);
+    line-height: 1;
+    color: var(--c-amber);
+    opacity: 0.12;
+    letter-spacing: -0.04em;
+    pointer-events: none;
+  }
+
+  @media (max-width: 768px) {
+    .grid { grid-template-columns: 1fr; }
+    .grid-card { grid-column: span 1 !important; grid-row: span 1 !important; min-height: 240px; }
+    .grid-card__watermark { font-size: 200px; right: -8vw; }
+  }
+</style>

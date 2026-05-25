@@ -1,0 +1,18 @@
+---
+const items = [
+  { id: 'hero',     ix: '01', label: 'Transmisión' },
+  { id: 'grid',     ix: '02', label: 'Expediente' },
+  { id: 'parallax', ix: '03', label: 'Protocolo'  },
+  { id: 'pin',      ix: '04', label: 'Tránsito'   },
+  { id: 'marquee',  ix: '05', label: 'Perímetro'  },
+  { id: 'outro',    ix: '06', label: 'Fin'        },
+];
+---
+
+<nav class="sidenav" aria-label="Sala navegación">
+  {items.map((item) => (
+    <a href={`#${item.id}`} data-nav={item.id}>
+      <span class="ix">{item.ix}</span><span>{item.label}</span>
+    </a>
+  ))}
+</nav>

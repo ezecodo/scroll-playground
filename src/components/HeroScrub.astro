@@ -1,0 +1,174 @@
+---
+const words = [
+  { text: 'El',          mod: '' },
+  { text: 'scroll',      mod: '' },
+  { text: 'es',          mod: '' },
+  { text: 'vigilancia',  mod: 'word--accent' },
+  { text: 'consentida.', mod: '' },
+];
+const subs = [
+  '// expediente abierto. lectura iniciada',
+  '// cinco salas. un protocolo. no retroceda',
+  '// el sistema sabe cuánto te detuviste aquí',
+];
+---
+
+<section id="hero" class="hero" data-section="hero" data-room="01 / 06">
+  <div class="hero__inner">
+    <div class="hero__topbar">
+      <span class="dot"></span>
+      <span class="wobble" data-wobble>TRANSMISIÓN INTERCEPTADA</span>
+      <span class="stamp">CLASIFICADO</span>
+      <span>03:14:07 UTC</span>
+    </div>
+
+    <h1 class="hero__title chrom">
+      {words.map((w) => (
+        <span class={`word ${w.mod}`}>{w.text}</span>
+      ))}
+    </h1>
+
+    <div class="hero__sub">
+      {subs.map((line, i) => (
+        <span class="line" data-line={i}>{line}<span class="caret"></span></span>
+      ))}
+    </div>
+
+    <div class="hero__bottombar">
+      <div class="progress">
+        <span>Decodificando</span>
+        <span class="bar" id="hero-bar" style="--prog:0"></span>
+        <span><span id="hero-prog">0</span>%</span>
+      </div>
+      <div>scroll ↓ para continuar</div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    height: 380vh;
+    padding: 0;
+    background: var(--c-ink);
+    color: var(--c-bone);
+  }
+  .hero__inner {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+    padding-inline: var(--space-l);
+    overflow: hidden;
+  }
+
+  .hero__topbar {
+    position: absolute;
+    top: var(--space-xl);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: var(--space-m);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .hero__topbar .dot {
+    width: 6px; height: 6px;
+    background: var(--c-amber);
+    border-radius: 50%;
+    animation: led-pulse 1.6s ease-in-out infinite;
+  }
+  .hero__topbar .stamp { color: var(--c-blood); }
+
+  .hero__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-variation-settings: "opsz" 144;
+    font-size: clamp(72px, 12vw + 12px, 200px);
+    line-height: 0.88;
+    letter-spacing: -0.045em;
+    text-align: center;
+    max-width: 14ch;
+    position: relative;
+  }
+  .hero__title .word {
+    display: inline-block;
+    margin-right: 0.16em;
+    opacity: 0;
+    filter: blur(8px);
+    will-change: opacity, filter, transform;
+  }
+  .hero__title .word--accent {
+    font-style: italic;
+    color: var(--c-amber);
+  }
+
+  .hero__sub {
+    position: absolute;
+    bottom: calc(var(--space-xl) + 4px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--c-bone-2);
+    text-align: center;
+    width: min(560px, 84vw);
+    min-height: 2em;
+  }
+  .hero__sub .line {
+    display: block;
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+  }
+  .hero__sub .caret {
+    display: inline-block;
+    width: 0.6em; height: 1em;
+    background: var(--c-amber);
+    vertical-align: -0.15em;
+    margin-left: 0.4em;
+    animation: caret-blink 1s steps(2) infinite;
+  }
+  @keyframes caret-blink { 50% { opacity: 0; } }
+
+  .hero__bottombar {
+    position: absolute;
+    bottom: var(--space-l);
+    left: var(--space-l);
+    right: var(--space-l);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--c-bone-3);
+  }
+  .hero__bottombar .progress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero__bottombar .bar {
+    display: inline-block;
+    width: 120px;
+    height: 1px;
+    background: var(--c-bone-3);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero__bottombar .bar::after {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: calc(var(--prog, 0) * 1%);
+    background: var(--c-amber);
+  }
+</style>

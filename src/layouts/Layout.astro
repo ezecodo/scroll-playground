@@ -1,0 +1,95 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'EL ARCHIVO — Transmisión interceptada',
+  description = 'Expediente filtrado. Seis salas. Un protocolo. No retroceda.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0A0908" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap"
+    />
+
+    <title>{title}</title>
+  </head>
+
+  <body>
+    {/* Atmosphere — grain + scanlines + vignette + occasional flash */}
+    <div class="atmosphere" aria-hidden="true">
+      <div class="atmosphere__grain"></div>
+      <div class="atmosphere__scanlines"></div>
+      <div class="atmosphere__vignette"></div>
+      <div class="atmosphere__flash" id="flash"></div>
+    </div>
+
+    {/* Reading progress bar — fill is scrubbed across the document */}
+    <div class="reading-bar" aria-hidden="true">
+      <div class="reading-bar__fill" id="reading-bar-fill"></div>
+    </div>
+
+    {/* Custom crosshair cursor — hidden on touch */}
+    <div class="cursor" id="cursor" aria-hidden="true">
+      <div class="cursor__cross"></div>
+      <div class="cursor__dot"></div>
+      <div class="cursor__coords" id="cursor-coords">0000/0000</div>
+    </div>
+
+    {/* SVG spine — right-edge line drawing itself with scroll */}
+    <div class="spine" aria-hidden="true">
+      <svg viewBox="0 0 1 100" preserveAspectRatio="none">
+        <line x1="0.5" y1="0" x2="0.5" y2="100" pathLength="100" id="spine-line" />
+      </svg>
+      <div class="spine__cap" id="spine-cap"></div>
+    </div>
+
+    {/* System chrome — four corner panels with live metrics */}
+    <div class="sys sys--tl">
+      <span class="sys__row"><span class="k">archivo</span><span class="v">EXP_0421/47</span></span>
+      <span class="sys__row"><span class="k">origen</span><span class="v">SECTOR_07</span></span>
+    </div>
+    <div class="sys sys--tr">
+      <span class="sys__row"><span class="k">status</span><span class="led"></span><span class="v v--toxic">EN VIVO</span></span>
+      <span class="sys__row"><span class="k">clearance</span><span class="v v--amber">N-04</span></span>
+    </div>
+    <div class="sys sys--bl">
+      <span class="sys__row"><span class="k">uplink</span><span class="v" id="sys-time">00:00:00 UTC</span></span>
+      <span class="sys__row"><span class="k">scroll</span><span class="v" id="sys-scroll">0000 px</span></span>
+    </div>
+    <div class="sys sys--br">
+      <span class="sys__row"><span class="k">sala</span><span class="v" id="sys-room">01 / 06</span></span>
+      <span class="sys__row"><span class="k">sig</span><span class="v v--toxic" id="sys-sig">●●●●●○</span></span>
+    </div>
+
+    <slot />
+
+    <script>
+      // Flip the html.no-js → .js-ready flag as early as possible
+      // so FOUC-hidden elements start hidden before GSAP arrives.
+      document.documentElement.classList.remove('no-js');
+      document.documentElement.classList.add('js-ready');
+
+      // Order: reduced-motion gate → lenis bridge → animations + effects
+      import '../scripts/reduced-motion.js';
+      import '../scripts/lenis-init.js';
+      import '../scripts/scroll-animations.js';
+      import '../scripts/effects.js';
+    </script>
+  </body>
+</html>

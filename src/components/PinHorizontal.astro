@@ -1,0 +1,208 @@
+---
+const panels = [
+  {
+    n: '01',
+    year: '1976',
+    coord: '−34.6037, −58.3816',
+    chapter: 'I — APERTURA',
+    classify: 'RESTRINGIDO',
+    classifyMod: 'v--blood',
+    chapterLabel: 'CAPÍTULO I',
+    title: 'Pin primero.<br />Trasladar después.',
+    excerpt: 'La sala queda pegada al viewport. El scroll vertical del visitante se traduce en un desplazamiento horizontal silencioso. <em>El visitante no lo sabe.</em>',
+  },
+  {
+    n: '02',
+    year: '1985',
+    coord: '−23.5505, −46.6333',
+    chapter: 'II — CÁLCULO',
+    classify: 'RESTRINGIDO',
+    classifyMod: 'v--blood',
+    chapterLabel: 'CAPÍTULO II',
+    title: 'Distancia <em>=</em> (paneles − 1) × 100vw.',
+    excerpt: 'El final del trigger se calcula así. Hardcodearlo es delatar la propia geometría. <em>Confiá en la fórmula.</em>',
+  },
+  {
+    n: '03',
+    year: '2003',
+    coord: '19.4326, −99.1332',
+    chapter: 'III — VELOCIDAD',
+    classify: 'PARCIAL',
+    classifyMod: 'v--amber',
+    chapterLabel: 'CAPÍTULO III',
+    title: 'Scrub: <em>true</em>.<br />Nunca un <span class="strike">número</span>.',
+    excerpt: 'Con true, el track sigue al scroll uno a uno. Con 0.5 hay lag elástico — bonito, pero <em>distinto</em>. Elegí con qué tipo de control querés vivir.',
+  },
+  {
+    n: '04',
+    year: '2047',
+    coord: '— — —',
+    chapter: 'IV — LIBERACIÓN',
+    classify: 'ABIERTO',
+    classifyMod: 'v--toxic',
+    chapterLabel: 'CAPÍTULO IV',
+    title: 'Liberar el pin.',
+    excerpt: 'Al final, pinSpacing crea el padding necesario y el resto del scroll continúa <em>como si nada hubiera pasado</em>. El visitante olvida la sala.',
+  },
+];
+---
+
+<section id="pin" class="pin-wrap" data-section="pin" data-room="04 / 06">
+  <div class="pin-track">
+    {panels.map((p) => (
+      <article class="pin-panel">
+        <div class="pin-panel__num">{p.n}</div>
+
+        <aside class="pin-panel__meta">
+          <div>
+            <div class="row"><span class="k">año</span><span class="v">{p.year}</span></div>
+            <div class="row"><span class="k">coord</span><span class="v">{p.coord}</span></div>
+            <div class="row"><span class="k">capítulo</span><span class="v v--amber">{p.chapter}</span></div>
+          </div>
+          <div>
+            <div class="row"><span class="k">classify</span><span class={`v ${p.classifyMod}`}>{p.classify}</span></div>
+          </div>
+        </aside>
+
+        <div class="pin-panel__body">
+          <span class="pin-panel__chapter">{p.chapterLabel}</span>
+          <h3 class="pin-panel__title" set:html={p.title}></h3>
+          <p class="pin-panel__excerpt" set:html={p.excerpt}></p>
+        </div>
+      </article>
+    ))}
+  </div>
+  <div class="pin-counter">
+    <span class="cur" id="pin-cur">01</span><span class="sep">/</span><span class="total">04</span>
+  </div>
+</section>
+
+<style>
+  .pin-wrap {
+    background: var(--c-ink);
+    color: var(--c-bone);
+    overflow: hidden;
+    border-top: 1px solid rgba(232, 226, 211, 0.08);
+  }
+  .pin-track {
+    height: 100vh;
+    display: flex;
+    align-items: stretch;
+    will-change: transform;
+  }
+  .pin-panel {
+    flex: 0 0 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    align-items: stretch;
+    padding-inline: var(--space-2xl);
+    gap: var(--space-2xl);
+    position: relative;
+    padding-block: var(--space-3xl);
+  }
+  .pin-panel__meta {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid rgba(232, 226, 211, 0.18);
+    padding-right: var(--space-l);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--c-bone-3);
+  }
+  .pin-panel__meta .row { line-height: 1.7; }
+  .pin-panel__meta .row .k { display: block; color: var(--c-bone-3); }
+  .pin-panel__meta .row .v { display: block; color: var(--c-bone); margin-bottom: var(--space-s); font-size: 11px; }
+  .pin-panel__meta .row .v--amber { color: var(--c-amber); }
+  .pin-panel__meta .row .v--blood { color: var(--c-blood); }
+  .pin-panel__meta .row .v--toxic { color: var(--c-toxic); }
+
+  .pin-panel__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-l);
+  }
+  .pin-panel__chapter {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--c-amber);
+  }
+  .pin-panel__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(56px, 7vw + 16px, 140px);
+    line-height: 0.9;
+    letter-spacing: -0.035em;
+    max-width: 16ch;
+  }
+  .pin-panel__title em { font-style: italic; color: var(--c-amber); }
+  .pin-panel__title .strike {
+    position: relative;
+    display: inline-block;
+  }
+  .pin-panel__title .strike::after {
+    content: "";
+    position: absolute;
+    left: -4%; right: -4%;
+    top: 56%;
+    height: 0.16em;
+    background: var(--c-blood);
+  }
+  .pin-panel__excerpt {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    line-height: 1.5;
+    color: var(--c-bone-2);
+    max-width: 50ch;
+  }
+
+  .pin-panel__num {
+    position: absolute;
+    top: var(--space-xl);
+    right: var(--space-2xl);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(80px, 12vw, 220px);
+    line-height: 1;
+    color: var(--c-bone);
+    opacity: 0.08;
+    letter-spacing: -0.04em;
+    pointer-events: none;
+  }
+
+  .pin-counter {
+    position: absolute;
+    bottom: var(--space-l);
+    right: var(--space-2xl);
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    z-index: 2;
+  }
+  .pin-counter .cur   { color: var(--c-amber); }
+  .pin-counter .sep   { color: var(--c-bone-3); margin: 0 6px; }
+  .pin-counter .total { color: var(--c-bone-3); }
+
+  @media (max-width: 768px) {
+    .pin-panel {
+      grid-template-columns: 1fr;
+      padding-inline: var(--space-m);
+      padding-block: var(--space-2xl);
+    }
+    .pin-panel__meta {
+      border-right: none;
+      border-bottom: 1px solid rgba(232, 226, 211, 0.18);
+      padding-right: 0;
+      padding-bottom: var(--space-m);
+    }
+  }
+</style>

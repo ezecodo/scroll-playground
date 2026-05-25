@@ -1,0 +1,63 @@
+/* =============================================================
+   TOKENS — dystopian palette ("El Archivo")
+   Single source of truth: palette, fluid type/space, easings.
+   ============================================================= */
+
+:root {
+  /* ---- Palette: warm ink + aged bone + amber warning + dried blood + toxic green ---- */
+  --c-ink:    #0A0908;
+  --c-ink-2:  #15130F;
+  --c-bone:   #E8E2D3;
+  --c-bone-2: #C5BFAF;
+  --c-bone-3: #908A7A;
+  --c-amber:  #FF7A1A;
+  --c-blood:  #B12A2A;
+  --c-toxic:  #BCFF4D;
+
+  /* ---- Semantic aliases ---- */
+  --color-bg:     var(--c-ink);
+  --color-fg:     var(--c-bone);
+  --color-accent: var(--c-amber);
+
+  /* ---- Fluid spacing ---- */
+  --space-3xs: clamp(4px,  0.4vw,  6px);
+  --space-2xs: clamp(8px,  0.8vw,  10px);
+  --space-xs:  clamp(12px, 1.2vw,  16px);
+  --space-s:   clamp(16px, 1.6vw,  20px);
+  --space-m:   clamp(24px, 2.4vw,  32px);
+  --space-l:   clamp(40px, 4vw,    56px);
+  --space-xl:  clamp(64px, 6vw,    80px);
+  --space-2xl: clamp(80px, 8vw,    104px);
+  --space-3xl: clamp(96px, 10vw,   128px);
+
+  /* ---- Fluid type ---- */
+  --text-sm:   clamp(13px, 0.78vw + 11px, 15px);
+  --text-base: clamp(16px, 0.4vw + 14.5px, 18px);
+  --text-lg:   clamp(18px, 0.6vw + 16px,   22px);
+  --text-xl:   clamp(22px, 1vw + 18px,     28px);
+  --text-2xl:  clamp(28px, 1.6vw + 22px,   40px);
+  --text-3xl:  clamp(36px, 2.4vw + 26px,   56px);
+  --text-4xl:  clamp(48px, 3.6vw + 28px,   80px);
+  --text-5xl:  clamp(64px, 5vw + 32px,     112px);
+  --text-6xl:  clamp(80px, 7vw + 36px,     140px);
+  --text-7xl:  clamp(96px, 8vw + 40px,     160px);
+  --text-8xl:  clamp(80px, 12vw + 32px,    240px);
+  --text-9xl:  clamp(80px, 12vw + 40px,    220px);
+
+  /* ---- Motion ---- */
+  --dur-fast: 200ms;
+  --dur-base: 400ms;
+  --dur-slow: 800ms;
+
+  --ease-out-expo:     cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-out-quart:    cubic-bezier(0.25, 1, 0.5, 1);
+
+  /* ---- Live values driven by JS ---- */
+  --aberration: 0;
+
+  /* ---- Fonts ---- */
+  --font-sans:    'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Fraunces', 'Times New Roman', serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+}

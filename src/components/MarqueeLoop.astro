@@ -1,0 +1,94 @@
+---
+---
+
+<section id="marquee" class="marquee-wrap" data-section="marquee" data-room="05 / 06">
+  <div class="marquee">
+    {/* Group 1 — visible */}
+    <div class="marquee__item">
+      <span class="ts">14:21:09</span>
+      <span>Transmisión perimetral</span>
+      <span class="dot"></span>
+      <span class="ts">14:21:09</span>
+      <span>Sin retroceso autorizado</span>
+      <span class="dot"></span>
+    </div>
+    {/* Group 2 — duplicate for seamless -50% loop */}
+    <div class="marquee__item" aria-hidden="true">
+      <span class="ts">14:21:09</span>
+      <span>Transmisión perimetral</span>
+      <span class="dot"></span>
+      <span class="ts">14:21:09</span>
+      <span>Sin retroceso autorizado</span>
+      <span class="dot"></span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .marquee-wrap {
+    background: var(--c-bone);
+    color: var(--c-ink);
+    border-block: 1px solid rgba(10, 9, 8, 0.2);
+    overflow: hidden;
+    position: relative;
+  }
+  /* Edge fades — keep the marquee from "bumping" into the viewport edges */
+  .marquee-wrap::before,
+  .marquee-wrap::after {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 80px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .marquee-wrap::before { left: 0;  background: linear-gradient(to right, var(--c-bone), transparent); }
+  .marquee-wrap::after  { right: 0; background: linear-gradient(to left,  var(--c-bone), transparent); }
+
+  .marquee {
+    display: flex;
+    gap: var(--space-l);
+    width: max-content;
+    padding-block: var(--space-xl);
+    animation: marquee-scroll 40s linear infinite;
+    will-change: transform;
+  }
+  .marquee:hover { animation-play-state: paused; }
+
+  .marquee__item {
+    display: flex;
+    align-items: center;
+    gap: clamp(20px, 2.4vw, 36px);
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-style: italic;
+    font-size: clamp(56px, 9vw, 140px);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+    color: var(--c-ink);
+  }
+  .marquee__item .dot {
+    display: inline-block;
+    width: clamp(10px, 1.2vw, 16px);
+    height: clamp(10px, 1.2vw, 16px);
+    background: var(--c-blood);
+    border-radius: 50%;
+  }
+  .marquee__item .ts {
+    font-family: var(--font-mono);
+    font-style: normal;
+    font-weight: 500;
+    font-size: clamp(14px, 1.2vw, 20px);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--c-blood);
+    border: 1px solid var(--c-blood);
+    padding: 4px 10px;
+  }
+
+  @keyframes marquee-scroll {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(-50%, 0, 0); }
+  }
+</style>

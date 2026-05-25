@@ -1,0 +1,91 @@
+---
+---
+
+<section id="parallax" class="parallax" data-section="parallax" data-room="03 / 06">
+  <div class="parallax__bg" data-parallax-bg aria-hidden="true">Vigilancia</div>
+  <div class="parallax__inner">
+    <div class="eyebrow"><span class="ix">03</span>PROTOCOLO DE PROFUNDIDAD</div>
+    <h3 class="reveal">El fondo viaja al <em>treinta por ciento</em>. El cuerpo, al cien.</h3>
+    <p class="reveal">
+      Toda profundidad en pantalla es <em>una mentira útil</em>. Dos velocidades distintas
+      y el ojo construye un volumen que nunca estuvo ahí. <strong>protocolo P-30</strong>.
+    </p>
+    <p class="reveal">
+      El navegador no sabe distinguir una <em>perspectiva</em> de una <em>traición</em>.
+      Animamos solo <strong>translate3d</strong> porque cualquier propiedad de layout
+      obliga al sistema a recalcular, y un sistema que recalcula es un sistema que <em>duda</em>.
+    </p>
+    <p class="reveal">Si llegaste hasta acá, fuiste registrado.</p>
+  </div>
+</section>
+
+<style>
+  .parallax {
+    background: var(--c-ink-2);
+    color: var(--c-bone);
+    overflow: hidden;
+    padding: var(--space-3xl) var(--space-l);
+    border-top: 1px solid rgba(232, 226, 211, 0.08);
+  }
+  .parallax__bg {
+    position: absolute;
+    top: -10%;
+    left: 0; right: 0;
+    text-align: center;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-style: italic;
+    font-variation-settings: "opsz" 144;
+    font-size: clamp(140px, 26vw, 420px);
+    line-height: 0.85;
+    color: var(--c-bone);
+    opacity: 0.05;
+    white-space: nowrap;
+    pointer-events: none;
+    will-change: transform;
+    letter-spacing: -0.045em;
+    /* Baked-in chromatic split — static (not driven by JS) for ambient depth */
+    text-shadow:
+      8px 0 0 rgba(255, 38, 76, 0.6),
+      -8px 0 0 rgba(46, 246, 255, 0.5);
+  }
+  .parallax__inner {
+    position: relative;
+    max-width: 720px;
+    margin: 0 auto;
+    padding-block: var(--space-2xl);
+  }
+  .parallax__inner h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--text-3xl);
+    line-height: 0.96;
+    letter-spacing: -0.03em;
+    margin-top: var(--space-s);
+    margin-bottom: var(--space-xl);
+    max-width: 16ch;
+  }
+  .parallax__inner h3 em { font-style: italic; color: var(--c-amber); }
+
+  .parallax__inner p {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: var(--text-xl);
+    line-height: 1.4;
+    letter-spacing: -0.005em;
+    margin-bottom: var(--space-l);
+    color: var(--c-bone-2);
+    max-width: 50ch;
+  }
+  .parallax__inner p em { font-style: italic; color: var(--c-bone); }
+  .parallax__inner p strong {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-style: normal;
+    font-size: 0.85em;
+    letter-spacing: 0.06em;
+    color: var(--c-amber);
+    padding: 1px 6px;
+    border: 1px solid var(--c-amber);
+  }
+</style>
